@@ -4,6 +4,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.klarna.risk.decision.domain.model.CustomerDebt;
+import com.klarna.risk.decision.domain.repository.CustomerDebtRepository;
+import com.klarna.risk.decision.domain.repository.CustomerDebtRepositoryImpl;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;

@@ -1,4 +1,6 @@
-package com.klarna.risk.decision.domain;
+package com.klarna.risk.decision.domain.repository;
+
+import com.klarna.risk.decision.domain.model.CustomerDebt;
 
 /**
  * An interface for handling the persistence of customer's debt.

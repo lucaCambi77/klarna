@@ -1,4 +1,4 @@
-package com.klarna.risk.decision.domain;
+package com.klarna.risk.decision.domain.model;
 
 /**
  * A class representing customer debt which is the sum of all of the purchases done by the customer.

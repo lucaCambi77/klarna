@@ -1,4 +1,4 @@
-package com.klarna.risk.decision.domain;
+package com.klarna.risk.decision.domain.model;
 
 /**
  * The predefined credit decision values.

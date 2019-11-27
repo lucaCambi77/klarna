@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.klarna.risk.decision.service.CreditDecisionServiceTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2019-11-27T21:37:45" hostname="luca-pc" time="0.028">
+  <properties/>
+  <testcase name="shouldRejectCreditRequest" classname="com.klarna.risk.decision.service.CreditDecisionServiceTest" time="0.017"/>
+  <testcase name="shouldAcceptCreditRequest" classname="com.klarna.risk.decision.service.CreditDecisionServiceTest" time="0.001"/>
+  <testcase name="shouldUpdateCustomerDebtWhenCreditAccepted" classname="com.klarna.risk.decision.service.CreditDecisionServiceTest" time="0.007"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

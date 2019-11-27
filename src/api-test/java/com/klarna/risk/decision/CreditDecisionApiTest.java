@@ -1,32 +1,40 @@
 package com.klarna.risk.decision;
 
-import com.klarna.risk.decision.api.CreditRequestDecisionV1;
-import com.klarna.risk.decision.api.CreditRequestV1;
-import org.junit.Rule;
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import org.junit.Rule;
+import org.junit.Test;
 
-public class CreditDecisionApiTest {
+import com.klarna.risk.decision.api.CreditRequestDecisionV1;
+import com.klarna.risk.decision.api.CreditRequestV1;
+import com.klarna.risk.decision.domain.strategy.CreditDecisionStrategyType;
+
+public class CreditDecisionApiTest
+{
 
     private static String SERVICE_URL = "http://localhost:8080/v1/decision";
 
     @Rule
     public final JettyServerResource server = new JettyServerResource();
 
+    private static CreditRequestV1 requestPayload = new CreditRequestV1.Builder()
+            .withEmail("john@doe.com").withFirstName("John").withLastName("Doe").withCreditDecisionType(CreditDecisionStrategyType.DEFAULT)
+            .build();
+
     @Test
-    public void requestUpTo10ShouldBeAccepted() {
-        CreditRequestV1 requestPayload = defaultCreditRequestOfPurchaseAmount(10);
+    public void requestUpTo10ShouldBeAccepted()
+    {
+        requestPayload.setPurchaseAmount(10);
 
         Response response = ClientBuilder.newClient()
-                                         .target(SERVICE_URL).request()
-                                         .post(Entity.entity(requestPayload, MediaType.APPLICATION_JSON));
+                .target(SERVICE_URL).request()
+                .post(Entity.entity(requestPayload, MediaType.APPLICATION_JSON));
 
         assertThat(response.getStatus(), is(200));
         CreditRequestDecisionV1 creditDecision = response.readEntity(CreditRequestDecisionV1.class);
@@ -35,12 +43,13 @@ public class CreditDecisionApiTest {
     }
 
     @Test
-    public void requestAbove10ShouldNotBeAccepted() {
-        CreditRequestV1 requestPayload = defaultCreditRequestOfPurchaseAmount(11);
+    public void requestAbove10ShouldNotBeAccepted()
+    {
+        requestPayload.setPurchaseAmount(11);
 
         Response response = ClientBuilder.newClient()
-                                         .target(SERVICE_URL).request()
-                                         .post(Entity.entity(requestPayload, MediaType.APPLICATION_JSON));
+                .target(SERVICE_URL).request()
+                .post(Entity.entity(requestPayload, MediaType.APPLICATION_JSON));
 
         assertThat(response.getStatus(), is(200));
         CreditRequestDecisionV1 creditDecision = response.readEntity(CreditRequestDecisionV1.class);
@@ -49,28 +58,27 @@ public class CreditDecisionApiTest {
     }
 
     @Test
-    public void customerDebtLimitShouldBeExceeded() {
-        for (int i = 0; i < 10; i++) {
+    public void customerDebtLimitShouldBeExceeded()
+    {
+        requestPayload.setPurchaseAmount(10);
+
+        for (int i = 0; i < 10; i++)
+        {
             ClientBuilder.newClient()
-                         .target(SERVICE_URL).request()
-                         .post(Entity.entity(defaultCreditRequestOfPurchaseAmount(10), MediaType.APPLICATION_JSON));
+                    .target(SERVICE_URL).request()
+                    .post(Entity.entity(requestPayload, MediaType.APPLICATION_JSON));
         }
 
-        CreditRequestV1 requestPayload = defaultCreditRequestOfPurchaseAmount(1);
+        requestPayload.setPurchaseAmount(1);
 
         Response response = ClientBuilder.newClient()
-                                         .target(SERVICE_URL).request()
-                                         .post(Entity.entity(requestPayload, MediaType.APPLICATION_JSON));
+                .target(SERVICE_URL).request()
+                .post(Entity.entity(requestPayload, MediaType.APPLICATION_JSON));
 
         assertThat(response.getStatus(), is(200));
         CreditRequestDecisionV1 creditDecision = response.readEntity(CreditRequestDecisionV1.class);
         assertThat(creditDecision.isAccepted(), is(false));
         assertThat(creditDecision.getReason(), is("debt"));
-    }
-
-
-    private CreditRequestV1 defaultCreditRequestOfPurchaseAmount(int purchaseAmount) {
-        return new CreditRequestV1("john@doe.com", "john", "doe", purchaseAmount);
     }
 
 }

@@ -1,7 +1,7 @@
 package com.klarna.risk.decision.api;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.klarna.risk.decision.domain.CreditDecision;
+import com.klarna.risk.decision.domain.model.CreditDecision;
 
 /**
  * A class representing credit decision result.

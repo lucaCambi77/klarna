@@ -1,9 +1,11 @@
-package com.klarna.risk.decision.domain;
+package com.klarna.risk.decision.domain.repository;
 
-import com.google.common.collect.Maps;
+import java.util.Map;
 
 import javax.annotation.Resource;
-import java.util.Map;
+
+import com.google.common.collect.Maps;
+import com.klarna.risk.decision.domain.model.CustomerDebt;
 
 /**
  * The implementation of the {@link CustomerDebtRepository} interface.
