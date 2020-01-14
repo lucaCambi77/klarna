@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.klarna.risk.decision.domain.CustomerDebtRepositoryTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2019-11-22T14:52:05" hostname="luca-pc" time="0.021">
-  <properties/>
-  <testcase name="newCustomerDebtIsZero" classname="com.klarna.risk.decision.domain.CustomerDebtRepositoryTest" time="0.02"/>
-  <testcase name="returningCustomerDebtIsNotZero" classname="com.klarna.risk.decision.domain.CustomerDebtRepositoryTest" time="0.001"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>
